@@ -56,6 +56,8 @@ Plugin 'bluz71/vim-moonfly-colors'
 Plugin 'ervandew/supertab'
 Plugin 'lervag/vimtex'
 Plugin 'Yggdroot/indentLine'
+Plugin 'Yggdroot/indentLine'
+Plugin 'unblevable/quick-scope' 
 
 
 
