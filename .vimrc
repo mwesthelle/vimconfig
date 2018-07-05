@@ -56,7 +56,7 @@ Plugin 'bluz71/vim-moonfly-colors'
 Plugin 'ervandew/supertab'
 Plugin 'lervag/vimtex'
 Plugin 'Yggdroot/indentLine'
-
+Plugin 'unblevable/quick-scope' 
 
 
 " The following are examples of different formats supported.
@@ -144,9 +144,21 @@ syntax on
 " =====================
 set cul
 
+" START SEARCHING RIGHT AWAY
+" ==========================
+set incsearch
+
+" SHOW ME SOME CONTEXT WHEN I SCROLL
+" ==================================
+set scrolloff=2
+
 " ENCODING
 " ========
 set encoding=utf-8
+
+" DETECT FILE CHANGES AND RELOAD ACCORDINGLY
+" ==========================================
+set autoread
 
 " FILETYPE SETTINGS
 " =================
