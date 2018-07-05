@@ -57,8 +57,6 @@ Plugin 'ervandew/supertab'
 Plugin 'lervag/vimtex'
 Plugin 'Yggdroot/indentLine'
 Plugin 'unblevable/quick-scope' 
-Plugin 'Yggdroot/indentLine'
-Plugin 'unblevable/quick-scope' 
 
 
 " The following are examples of different formats supported.
