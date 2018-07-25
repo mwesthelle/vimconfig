@@ -7,13 +7,29 @@ filetype off                  " required
 " ==============
 let mapleader=","
 
+" CTRLP SETTINGS
+" ==============
+let g:ctrlp_map = '<c-p>'
+let g:ctrlp_cmd = 'CtrlPMRUFiles'
+let g:ctrlp_mruf_relative = 1
+
+if executable('ag')
+	" Use ag over grep
+	set grepprg=ag\ --nogroup\ --nocolor
+	" Use ag in CtrlP for listing files. Lightning fast and respects .gitignore
+	let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
+
+	" ag is fast enough that CtrlP doesn't need to cache
+	let g:ctrlp_use_caching = 0
+endif
+
 " LINE NUMBER SETTING
 " ===================
 set relativenumber
 
 " GLOBAL PLUGIN SETTINGS
 " ======================
-let g:jedi#popup_on_dot = 0
+"let g:jedi#popup_on_dot = 0
 let g:gutentags_cache_dir = '~/vimtags'
 
 " STATUSLINE SETTINGS
@@ -21,6 +37,7 @@ let g:gutentags_cache_dir = '~/vimtags'
 set statusline+=%#warningmsg#
 set statusline+=%{SyntasticStatuslineFlag()}
 set statusline+=%*
+set statusline=%{anzu#search_status()}
 
 " SYNTASTIC SETTINGS
 " ==================
@@ -41,22 +58,29 @@ call vundle#begin(path)
 
 " let Vundle manage Vundle, required
 Plugin 'VundleVim/Vundle.vim'
-Plugin 'HendrikPetertje/vimify'
+Plugin 'jiangmiao/auto-pairs' 
+Plugin 'rafi/awesome-vim-colorschemes'
+Plugin 'ctrlpvim/ctrlp.vim'
+Plugin 'Yggdroot/indentLine'
+Plugin 'davidhalter/jedi-vim'
+Plugin 'scrooloose/nerdtree'
+Plugin 'crucerucalin/peaksea.vim'
+Plugin 'shawncplus/phpcomplete.vim'
+Plugin 'unblevable/quick-scope' 
+Plugin 'ervandew/supertab'
+Plugin 'vim-syntastic/syntastic'
+Plugin 'majutsushi/tagbar'
 Plugin 'vim-airline/vim-airline'
 Plugin 'vim-airline/vim-airline-themes'
-Plugin 'scrooloose/nerdtree'
-Plugin 'davidhalter/jedi-vim'
-Plugin 'ludovicchabant/vim-gutentags'
-Plugin 'majutsushi/tagbar'
-Plugin 'crucerucalin/peaksea.vim'
-Plugin 'vim-syntastic/syntastic'
-Plugin 'rafi/awesome-vim-colorschemes'
+Plugin 'osyo-manga/vim-anzu'
+Plugin 'Chiel92/vim-autoformat'
 Plugin 'tpope/vim-fugitive'
+Plugin 'ludovicchabant/vim-gutentags'
+Plugin 'HendrikPetertje/vimify'
+Plugin 'antoyo/vim-licenses'
 Plugin 'bluz71/vim-moonfly-colors'
-Plugin 'ervandew/supertab'
+Plugin 'tpope/vim-surround'
 Plugin 'lervag/vimtex'
-Plugin 'Yggdroot/indentLine'
-Plugin 'unblevable/quick-scope' 
 
 
 " The following are examples of different formats supported.
@@ -92,6 +116,9 @@ filetype plugin indent on    " required
 " see :h vundle for more details or wiki for FAQ
 " Put your non-Plugin stuff after this line
 
+" MATCHIT
+" =======
+runtime macros/matchit.vim
 
 " AIRLINE SETTINGS
 " ================
@@ -115,8 +142,15 @@ nnoremap <F3> :NERDTreeToggle<cr>
 nmap <F8> :TagbarToggle<CR>
 nnoremap <leader>ev :vsplit $MYVIMRC<cr>
 nnoremap <leader>sv :source $MYVIMRC<cr>
+nnoremap <leader>scb :set scrollbind!<cr>
 noremap <Leader>s :update<CR>
 nmap <CR> o<Esc>k
+noremap <Leader>f :Autoformat<CR>
+nmap n <Plug>(anzu-n-with-echo)
+nmap N <Plug>(anzu-N-with-echo)
+nmap * <Plug>(anzu-star-with-echo)
+nmap # <Plug>(anzu-sharp-with-echo)
+nmap <Esc><Esc> <Plug>(anzu-clear-search-status)
 
 " SUPERTAB SETTINGS
 " =================
@@ -140,6 +174,10 @@ colorscheme moonfly
 " =============
 syntax on
 
+" TURN ON MOUSE SUPPORT
+" =====================
+set mouse=a
+
 " CURSOR LINE HIGHLIGHT
 " =====================
 set cul
@@ -162,9 +200,10 @@ set autoread
 
 " FILETYPE SETTINGS
 " =================
-autocmd FileType python setl expandtab tabstop=4 shiftwidth=4 softtabstop=0
+autocmd FileType python setl expandtab tabstop=4 shiftwidth=4 softtabstop=0 nomodeline
 autocmd FileType json setl expandtab tabstop=2 shiftwidth=2 softtabstop=0
 autocmd FileType yaml setl expandtab tabstop=2 shiftwidth=2 softtabstop=0
+
 
 " LARGE FILE SETTINGS
 " ===================
@@ -172,3 +211,9 @@ let g:LargeFile = 1024 * 1024 * 10
 augroup LargeFile
 	autocmd BufReadPre * let f=expand("<afile>") | if getfsize(f) > g:LargeFile | set eventignore+=FileType | setlocal noswapfile bufhidden=unload buftype=nowrite undolevels=-1 | else | set eventignore-=FileType | endif
 augroup END
+
+" LICENSE SETTINGS
+" ================
+let g:licenses_authors_name = 'Westhelle, Matheus <matheus.westhelle@inf.ufrgs.br'
+let g:licenses_copyright_holders_name = 'Westhelle, Matheus <matheus.westhelle@inf.ufrgs.br'
+let g:licenses_default_commands = [ 'gpl', 'mit', 'apache' ]
