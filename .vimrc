@@ -46,6 +46,9 @@ let g:syntastic_auto_loc_list = 1
 let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 0
 let g:syntastic_python_python_exec = 'python3'
+let g:syntastic_php_checkers = ['php', 'phpcs', 'phpmd']
+let g:syntastic_php_phpcs_args = '--standard=psr2'
+let g:syntastic_php_phpmd_post_args = 'cleancode,codesize,controversial,design,unusedcode'
 
 " VUNDLE INITIALIZATION
 " =====================
@@ -58,13 +61,14 @@ call vundle#begin(path)
 
 " let Vundle manage Vundle, required
 Plugin 'VundleVim/Vundle.vim'
+Plugin 'rking/ag.vim'
 Plugin 'jiangmiao/auto-pairs' 
 Plugin 'rafi/awesome-vim-colorschemes'
 Plugin 'ctrlpvim/ctrlp.vim'
 Plugin 'Yggdroot/indentLine'
 Plugin 'davidhalter/jedi-vim'
 Plugin 'scrooloose/nerdtree'
-Plugin 'crucerucalin/peaksea.vim'
+Plugin 'StanAngeloff/php.vim'
 Plugin 'shawncplus/phpcomplete.vim'
 Plugin 'unblevable/quick-scope' 
 Plugin 'ervandew/supertab'
@@ -76,7 +80,6 @@ Plugin 'osyo-manga/vim-anzu'
 Plugin 'Chiel92/vim-autoformat'
 Plugin 'tpope/vim-fugitive'
 Plugin 'ludovicchabant/vim-gutentags'
-Plugin 'HendrikPetertje/vimify'
 Plugin 'antoyo/vim-licenses'
 Plugin 'bluz71/vim-moonfly-colors'
 Plugin 'tpope/vim-surround'
@@ -201,6 +204,7 @@ set autoread
 " FILETYPE SETTINGS
 " =================
 autocmd FileType python setl expandtab tabstop=4 shiftwidth=4 softtabstop=0 nomodeline
+autocmd FileType php setl expandtab tabstop=4 shiftwidth=4 softtabstop=4
 autocmd FileType json setl expandtab tabstop=2 shiftwidth=2 softtabstop=0
 autocmd FileType yaml setl expandtab tabstop=2 shiftwidth=2 softtabstop=0
 
@@ -217,3 +221,7 @@ augroup END
 let g:licenses_authors_name = 'Westhelle, Matheus <matheus.westhelle@inf.ufrgs.br'
 let g:licenses_copyright_holders_name = 'Westhelle, Matheus <matheus.westhelle@inf.ufrgs.br'
 let g:licenses_default_commands = [ 'gpl', 'mit', 'apache' ]
+
+" ALLOW SAVING OF FILES AS SUDO
+" =============================
+cmap w!! w !sudo tee > /dev/null %
